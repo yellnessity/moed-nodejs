@@ -153,23 +153,6 @@ ipcMain.on("read-file", async (event, buffer) => {
   event.reply("on-read-file", croppedBuffer);
 });
 
-ipcMain.on("read-file-from-fs", async (event, arg) => {
-  let stream = new BinaryFile("./c12-85v.xcr", "r", "LE");
-  let res = [];
-  await (async function () {
-    try {
-      await stream.open();
-      for (let i = 0; i < (await stream.size()); i++)
-        res.push(await stream.readUInt16());
-      await stream.close();
-    } catch (err) {
-      console.error(err);
-    }
-  })();
-  console.log(res);
-  event.reply("on-read-file-from-fs");
-});
-
 ipcMain.on("show-filter", (event) => {
   event.reply("on-show-filter", bsf(10, 80, 64, 0.002));
 });
